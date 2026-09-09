@@ -1,0 +1,17 @@
+.create-user-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.form-input {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    width: 50%;
+}
