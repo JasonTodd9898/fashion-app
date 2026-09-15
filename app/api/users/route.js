@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/lib/db'; 
-import User from '@/models/User';
+import User from '@/models/user';
 import bcrypt from 'bcryptjs';
 
 export async function POST(req) {
@@ -33,7 +33,7 @@ export async function POST(req) {
       name,
       email,
       password: hashedPassword,
-      dob,
+      dateOfBirth: dob,
     });
 
     // 5. Return success response \
@@ -45,7 +45,7 @@ export async function POST(req) {
           id: newUser._id,
           name: newUser.name,
           email: newUser.email,
-          dob: newUser.dob,
+          dateOfBirth: newUser.dateOfBirth,
         },
       },
       { status: 201 }
