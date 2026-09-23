@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/lib/fire-base';
 import "../custom.css";
 
@@ -105,6 +105,38 @@ export default function CreateUser() {
         }
     }
 
+    async function handleEmailAndPasswordSignIn() {
+        try {
+            setStatus({
+                loading: true,
+                message: '',
+                error: false
+            });
+            console.log("formData:", formData);
+            console.log("email:", formData.email);
+            console.log("password:", formData.password);
+
+            const email = formData.email.trim();
+            const result = await createUserWithEmailAndPassword(auth, email, formData.password);
+            const provider = new GoogleAuthProvider();
+            const user = result.user;
+
+            setStatus({
+                loading: false,
+                message: `Signed in as ${user.email}`,
+                error: false
+            });
+        } catch (error) {
+            console.error("Email Sign-In Error:", error);
+
+            setStatus({
+                loading: false,
+                message: 'Email sign-in failed. Please try again.',
+                error: true
+            });
+        }
+    }
+
     return (
         <form
             autoComplete="off"
@@ -200,6 +232,18 @@ export default function CreateUser() {
                 }}
             >
                 Continue with Google
+            </button>
+
+            <button
+                type="button"
+                onClick={handleEmailAndPasswordSignIn}
+                className="form-button"
+                disabled={status.loading}
+                style={{
+                    width: "100%"
+                }}
+            >
+                Sign In with Email
             </button>
 
         </form>
